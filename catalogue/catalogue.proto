@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option go_package = "github.com/paulja/catalogue-proto/catalogue";
+
+// create a catalogue
+message CreateContainerRequest {
+  string name = 1;
+}
+message CreateContainerResponse {
+  string reference = 1;
+}
+
+// create a query on a content item
+message CreateContentQueryRequest {
+  string content_reference = 1;
+  string pattern = 2;
+  repeated string values = 3;
+}
+message CreateContentQueryResponse {
+  string reference = 1;
+}
+
+// catalogue actions
+message BuildCatalogueRequest {
+  string catalogue_reference = 1;
+}
+message BuildCatalogueResponse {
+  enum ResponseState {
+    RESPONSE_STATE_UNSPECIFIED = 0;
+    RESPONSE_STATE_SUCCESS = 1;
+    RESPONSE_STATE_FAILED = 2;
+  }
+  ResponseState status = 1;
+}
+message ListCataloguesRequest {}
+message ListCataloguesResponse {
+  map<string, string> catalogues = 1;
+}
+message ListContentRequest {
+  string catalogue_reference = 1;
+}
+message ListContentResponse {
+  repeated string content_reference = 1;
+}
+
+// service definition
+service CatalogueService {
+  rpc CreateContainer(CreateContainerRequest) returns (CreateContainerResponse);
+  rpc CreateContentQuery(CreateContentQueryRequest) returns (CreateContentQueryResponse);
+
+  rpc BuildCatalogue(BuildCatalogueRequest) returns (BuildCatalogueResponse);
+  rpc ListCatalogues(ListCataloguesRequest) returns (ListCataloguesResponse);
+  rpc ListContent(ListContentRequest) returns (ListContentResponse);
+}
