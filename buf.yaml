@@ -1,0 +1,9 @@
+version: v2
+lint:
+  use:
+    - DEFAULT
+  enum_zero_value_suffix: _UNSPECIFIED
+  service_suffix: Service
+  ignore_only:
+    PACKAGE_DEFINED:
+      - catalogue
