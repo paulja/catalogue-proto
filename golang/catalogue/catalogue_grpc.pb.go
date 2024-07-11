@@ -19,11 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	CatalogueService_CreateContainer_FullMethodName    = "/catalogue.v1.CatalogueService/CreateContainer"
-	CatalogueService_CreateContentQuery_FullMethodName = "/catalogue.v1.CatalogueService/CreateContentQuery"
-	CatalogueService_BuildCatalogue_FullMethodName     = "/catalogue.v1.CatalogueService/BuildCatalogue"
-	CatalogueService_ListCatalogues_FullMethodName     = "/catalogue.v1.CatalogueService/ListCatalogues"
-	CatalogueService_ListContent_FullMethodName        = "/catalogue.v1.CatalogueService/ListContent"
+	CatalogueService_CreateContainer_FullMethodName = "/CatalogueService/CreateContainer"
+	CatalogueService_CreateQuery_FullMethodName     = "/CatalogueService/CreateQuery"
+	CatalogueService_ListContainers_FullMethodName  = "/CatalogueService/ListContainers"
+	CatalogueService_ListContent_FullMethodName     = "/CatalogueService/ListContent"
+	CatalogueService_ListQueries_FullMethodName     = "/CatalogueService/ListQueries"
+	CatalogueService_ListUsers_FullMethodName       = "/CatalogueService/ListUsers"
+	CatalogueService_BuildContainer_FullMethodName  = "/CatalogueService/BuildContainer"
+	CatalogueService_BuildContent_FullMethodName    = "/CatalogueService/BuildContent"
 )
 
 // CatalogueServiceClient is the client API for CatalogueService service.
@@ -33,10 +36,13 @@ const (
 // service definition
 type CatalogueServiceClient interface {
 	CreateContainer(ctx context.Context, in *CreateContainerRequest, opts ...grpc.CallOption) (*CreateContainerResponse, error)
-	CreateContentQuery(ctx context.Context, in *CreateContentQueryRequest, opts ...grpc.CallOption) (*CreateContentQueryResponse, error)
-	BuildCatalogue(ctx context.Context, in *BuildCatalogueRequest, opts ...grpc.CallOption) (*BuildCatalogueResponse, error)
-	ListCatalogues(ctx context.Context, in *ListCataloguesRequest, opts ...grpc.CallOption) (*ListCataloguesResponse, error)
+	CreateQuery(ctx context.Context, in *CreateQueryRequest, opts ...grpc.CallOption) (*CreateQueryResponse, error)
+	ListContainers(ctx context.Context, in *ListContainersRequest, opts ...grpc.CallOption) (*ListContainersResponse, error)
 	ListContent(ctx context.Context, in *ListContentRequest, opts ...grpc.CallOption) (*ListContentResponse, error)
+	ListQueries(ctx context.Context, in *ListQueriesRequest, opts ...grpc.CallOption) (*ListQueriesResponse, error)
+	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	BuildContainer(ctx context.Context, in *BuildContainerRequest, opts ...grpc.CallOption) (*BuildContainerResponse, error)
+	BuildContent(ctx context.Context, in *BuildContentRequest, opts ...grpc.CallOption) (*BuildContentResponse, error)
 }
 
 type catalogueServiceClient struct {
@@ -57,30 +63,20 @@ func (c *catalogueServiceClient) CreateContainer(ctx context.Context, in *Create
 	return out, nil
 }
 
-func (c *catalogueServiceClient) CreateContentQuery(ctx context.Context, in *CreateContentQueryRequest, opts ...grpc.CallOption) (*CreateContentQueryResponse, error) {
+func (c *catalogueServiceClient) CreateQuery(ctx context.Context, in *CreateQueryRequest, opts ...grpc.CallOption) (*CreateQueryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateContentQueryResponse)
-	err := c.cc.Invoke(ctx, CatalogueService_CreateContentQuery_FullMethodName, in, out, cOpts...)
+	out := new(CreateQueryResponse)
+	err := c.cc.Invoke(ctx, CatalogueService_CreateQuery_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *catalogueServiceClient) BuildCatalogue(ctx context.Context, in *BuildCatalogueRequest, opts ...grpc.CallOption) (*BuildCatalogueResponse, error) {
+func (c *catalogueServiceClient) ListContainers(ctx context.Context, in *ListContainersRequest, opts ...grpc.CallOption) (*ListContainersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BuildCatalogueResponse)
-	err := c.cc.Invoke(ctx, CatalogueService_BuildCatalogue_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *catalogueServiceClient) ListCatalogues(ctx context.Context, in *ListCataloguesRequest, opts ...grpc.CallOption) (*ListCataloguesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListCataloguesResponse)
-	err := c.cc.Invoke(ctx, CatalogueService_ListCatalogues_FullMethodName, in, out, cOpts...)
+	out := new(ListContainersResponse)
+	err := c.cc.Invoke(ctx, CatalogueService_ListContainers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -97,6 +93,46 @@ func (c *catalogueServiceClient) ListContent(ctx context.Context, in *ListConten
 	return out, nil
 }
 
+func (c *catalogueServiceClient) ListQueries(ctx context.Context, in *ListQueriesRequest, opts ...grpc.CallOption) (*ListQueriesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListQueriesResponse)
+	err := c.cc.Invoke(ctx, CatalogueService_ListQueries_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *catalogueServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListUsersResponse)
+	err := c.cc.Invoke(ctx, CatalogueService_ListUsers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *catalogueServiceClient) BuildContainer(ctx context.Context, in *BuildContainerRequest, opts ...grpc.CallOption) (*BuildContainerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BuildContainerResponse)
+	err := c.cc.Invoke(ctx, CatalogueService_BuildContainer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *catalogueServiceClient) BuildContent(ctx context.Context, in *BuildContentRequest, opts ...grpc.CallOption) (*BuildContentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BuildContentResponse)
+	err := c.cc.Invoke(ctx, CatalogueService_BuildContent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CatalogueServiceServer is the server API for CatalogueService service.
 // All implementations must embed UnimplementedCatalogueServiceServer
 // for forward compatibility
@@ -104,10 +140,13 @@ func (c *catalogueServiceClient) ListContent(ctx context.Context, in *ListConten
 // service definition
 type CatalogueServiceServer interface {
 	CreateContainer(context.Context, *CreateContainerRequest) (*CreateContainerResponse, error)
-	CreateContentQuery(context.Context, *CreateContentQueryRequest) (*CreateContentQueryResponse, error)
-	BuildCatalogue(context.Context, *BuildCatalogueRequest) (*BuildCatalogueResponse, error)
-	ListCatalogues(context.Context, *ListCataloguesRequest) (*ListCataloguesResponse, error)
+	CreateQuery(context.Context, *CreateQueryRequest) (*CreateQueryResponse, error)
+	ListContainers(context.Context, *ListContainersRequest) (*ListContainersResponse, error)
 	ListContent(context.Context, *ListContentRequest) (*ListContentResponse, error)
+	ListQueries(context.Context, *ListQueriesRequest) (*ListQueriesResponse, error)
+	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	BuildContainer(context.Context, *BuildContainerRequest) (*BuildContainerResponse, error)
+	BuildContent(context.Context, *BuildContentRequest) (*BuildContentResponse, error)
 	mustEmbedUnimplementedCatalogueServiceServer()
 }
 
@@ -118,17 +157,26 @@ type UnimplementedCatalogueServiceServer struct {
 func (UnimplementedCatalogueServiceServer) CreateContainer(context.Context, *CreateContainerRequest) (*CreateContainerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateContainer not implemented")
 }
-func (UnimplementedCatalogueServiceServer) CreateContentQuery(context.Context, *CreateContentQueryRequest) (*CreateContentQueryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateContentQuery not implemented")
+func (UnimplementedCatalogueServiceServer) CreateQuery(context.Context, *CreateQueryRequest) (*CreateQueryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateQuery not implemented")
 }
-func (UnimplementedCatalogueServiceServer) BuildCatalogue(context.Context, *BuildCatalogueRequest) (*BuildCatalogueResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BuildCatalogue not implemented")
-}
-func (UnimplementedCatalogueServiceServer) ListCatalogues(context.Context, *ListCataloguesRequest) (*ListCataloguesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCatalogues not implemented")
+func (UnimplementedCatalogueServiceServer) ListContainers(context.Context, *ListContainersRequest) (*ListContainersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListContainers not implemented")
 }
 func (UnimplementedCatalogueServiceServer) ListContent(context.Context, *ListContentRequest) (*ListContentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListContent not implemented")
+}
+func (UnimplementedCatalogueServiceServer) ListQueries(context.Context, *ListQueriesRequest) (*ListQueriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListQueries not implemented")
+}
+func (UnimplementedCatalogueServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedCatalogueServiceServer) BuildContainer(context.Context, *BuildContainerRequest) (*BuildContainerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BuildContainer not implemented")
+}
+func (UnimplementedCatalogueServiceServer) BuildContent(context.Context, *BuildContentRequest) (*BuildContentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BuildContent not implemented")
 }
 func (UnimplementedCatalogueServiceServer) mustEmbedUnimplementedCatalogueServiceServer() {}
 
@@ -161,56 +209,38 @@ func _CatalogueService_CreateContainer_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CatalogueService_CreateContentQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateContentQueryRequest)
+func _CatalogueService_CreateQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateQueryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CatalogueServiceServer).CreateContentQuery(ctx, in)
+		return srv.(CatalogueServiceServer).CreateQuery(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CatalogueService_CreateContentQuery_FullMethodName,
+		FullMethod: CatalogueService_CreateQuery_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatalogueServiceServer).CreateContentQuery(ctx, req.(*CreateContentQueryRequest))
+		return srv.(CatalogueServiceServer).CreateQuery(ctx, req.(*CreateQueryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CatalogueService_BuildCatalogue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BuildCatalogueRequest)
+func _CatalogueService_ListContainers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListContainersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CatalogueServiceServer).BuildCatalogue(ctx, in)
+		return srv.(CatalogueServiceServer).ListContainers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CatalogueService_BuildCatalogue_FullMethodName,
+		FullMethod: CatalogueService_ListContainers_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatalogueServiceServer).BuildCatalogue(ctx, req.(*BuildCatalogueRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CatalogueService_ListCatalogues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCataloguesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CatalogueServiceServer).ListCatalogues(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CatalogueService_ListCatalogues_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatalogueServiceServer).ListCatalogues(ctx, req.(*ListCataloguesRequest))
+		return srv.(CatalogueServiceServer).ListContainers(ctx, req.(*ListContainersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -233,11 +263,83 @@ func _CatalogueService_ListContent_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CatalogueService_ListQueries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListQueriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogueServiceServer).ListQueries(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CatalogueService_ListQueries_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogueServiceServer).ListQueries(ctx, req.(*ListQueriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CatalogueService_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUsersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogueServiceServer).ListUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CatalogueService_ListUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogueServiceServer).ListUsers(ctx, req.(*ListUsersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CatalogueService_BuildContainer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuildContainerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogueServiceServer).BuildContainer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CatalogueService_BuildContainer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogueServiceServer).BuildContainer(ctx, req.(*BuildContainerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CatalogueService_BuildContent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuildContentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogueServiceServer).BuildContent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CatalogueService_BuildContent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogueServiceServer).BuildContent(ctx, req.(*BuildContentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CatalogueService_ServiceDesc is the grpc.ServiceDesc for CatalogueService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CatalogueService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "catalogue.v1.CatalogueService",
+	ServiceName: "CatalogueService",
 	HandlerType: (*CatalogueServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -245,20 +347,32 @@ var CatalogueService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CatalogueService_CreateContainer_Handler,
 		},
 		{
-			MethodName: "CreateContentQuery",
-			Handler:    _CatalogueService_CreateContentQuery_Handler,
+			MethodName: "CreateQuery",
+			Handler:    _CatalogueService_CreateQuery_Handler,
 		},
 		{
-			MethodName: "BuildCatalogue",
-			Handler:    _CatalogueService_BuildCatalogue_Handler,
-		},
-		{
-			MethodName: "ListCatalogues",
-			Handler:    _CatalogueService_ListCatalogues_Handler,
+			MethodName: "ListContainers",
+			Handler:    _CatalogueService_ListContainers_Handler,
 		},
 		{
 			MethodName: "ListContent",
 			Handler:    _CatalogueService_ListContent_Handler,
+		},
+		{
+			MethodName: "ListQueries",
+			Handler:    _CatalogueService_ListQueries_Handler,
+		},
+		{
+			MethodName: "ListUsers",
+			Handler:    _CatalogueService_ListUsers_Handler,
+		},
+		{
+			MethodName: "BuildContainer",
+			Handler:    _CatalogueService_BuildContainer_Handler,
+		},
+		{
+			MethodName: "BuildContent",
+			Handler:    _CatalogueService_BuildContent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

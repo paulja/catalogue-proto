@@ -11,44 +11,72 @@ message CreateContainerResponse {
 }
 
 // create a query on a content item
-message CreateContentQueryRequest {
+message CreateQueryRequest {
   string content_reference = 1;
   string pattern = 2;
   repeated string values = 3;
 }
-message CreateContentQueryResponse {
+message CreateQueryResponse {
   string reference = 1;
 }
 
-// catalogue actions
-message BuildCatalogueRequest {
-  string catalogue_reference = 1;
-}
-message BuildCatalogueResponse {
-  enum ResponseState {
-    RESPONSE_STATE_UNSPECIFIED = 0;
-    RESPONSE_STATE_SUCCESS = 1;
-    RESPONSE_STATE_FAILED = 2;
-  }
-  ResponseState status = 1;
-}
-message ListCataloguesRequest {}
-message ListCataloguesResponse {
-  map<string, string> catalogues = 1;
+// list actions
+message ListContainersRequest {}
+message ListContainersResponse {
+  map<string, string> containers = 1;
 }
 message ListContentRequest {
-  string catalogue_reference = 1;
+  string container_reference = 1;
 }
 message ListContentResponse {
   repeated string content_reference = 1;
+}
+message ListQueriesRequest {
+  string container_reference = 1;
+  string content_reference = 2;
+}
+message ListQueriesResponse {
+  repeated string queries = 1;
+}
+message ListUsersRequest {
+  string container_reference = 1;
+  string content_reference = 2;
+}
+message ListUsersResponse {
+  map<string, string> users = 1;
+}
+
+// actions
+enum ResponseStatus {
+  RESPONSE_STATUS_UNSPECIFIED = 0;
+  RESPONSE_STATUS_SUCCESS = 1;
+  RESPONSE_STATUS_FAILED = 2;
+}
+
+message BuildContainerRequest {
+  string container_reference = 1;
+}
+message BuildContainerResponse {
+  ResponseStatus status = 1;
+}
+message BuildContentRequest {
+  string container_reference = 1;
+  string content_reference = 2;
+}
+message BuildContentResponse {
+  ResponseStatus status = 1;
 }
 
 // service definition
 service CatalogueService {
   rpc CreateContainer(CreateContainerRequest) returns (CreateContainerResponse);
-  rpc CreateContentQuery(CreateContentQueryRequest) returns (CreateContentQueryResponse);
+  rpc CreateQuery(CreateQueryRequest) returns (CreateQueryResponse);
 
-  rpc BuildCatalogue(BuildCatalogueRequest) returns (BuildCatalogueResponse);
-  rpc ListCatalogues(ListCataloguesRequest) returns (ListCataloguesResponse);
+  rpc ListContainers(ListContainersRequest) returns (ListContainersResponse);
   rpc ListContent(ListContentRequest) returns (ListContentResponse);
+  rpc ListQueries(ListQueriesRequest) returns (ListQueriesResponse);
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+
+  rpc BuildContainer(BuildContainerRequest) returns (BuildContainerResponse);
+  rpc BuildContent(BuildContentRequest) returns (BuildContentResponse);
 }
