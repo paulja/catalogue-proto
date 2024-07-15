@@ -12,9 +12,10 @@ message CreateContainerResponse {
 
 // create a query on a content item
 message CreateQueryRequest {
-  string content_reference = 1;
-  string pattern = 2;
-  repeated string values = 3;
+  string container_reference = 1;
+  string content_reference = 2;
+  string pattern = 3;
+  repeated string values = 4;
 }
 message CreateQueryResponse {
   string reference = 1;
