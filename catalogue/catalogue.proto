@@ -24,7 +24,7 @@ message CreateQueryResponse {
 // list actions
 message ListContainersRequest {}
 message ListContainersResponse {
-  map<string, string> containers = 1;
+  repeated string containers = 1;
 }
 message ListContentRequest {
   string container_reference = 1;
