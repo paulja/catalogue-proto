@@ -47,26 +47,15 @@ message ListUsersResponse {
   map<string, string> users = 1;
 }
 
-// actions
-enum ResponseStatus {
-  RESPONSE_STATUS_UNSPECIFIED = 0;
-  RESPONSE_STATUS_SUCCESS = 1;
-  RESPONSE_STATUS_FAILED = 2;
-}
-
 message BuildContainerRequest {
   string container_reference = 1;
 }
-message BuildContainerResponse {
-  ResponseStatus status = 1;
-}
+message BuildContainerResponse {}
 message BuildContentRequest {
   string container_reference = 1;
   string content_reference = 2;
 }
-message BuildContentResponse {
-  ResponseStatus status = 1;
-}
+message BuildContentResponse {}
 
 // service definition
 service CatalogueService {
