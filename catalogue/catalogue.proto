@@ -14,8 +14,7 @@ message CreateContainerResponse {
 message CreateQueryRequest {
   string container_reference = 1;
   string content_reference = 2;
-  string pattern = 3;
-  repeated string values = 4;
+  string query = 3;
 }
 message CreateQueryResponse {
   string reference = 1;
