@@ -45,6 +45,12 @@ message ListUsersRequest {
 message ListUsersResponse {
   map<string, string> users = 1;
 }
+message ListUserRequest {
+  string reference = 1;
+}
+message ListUserResponse {
+  repeated string contents = 1;
+}
 
 message BuildContainerRequest {
   string container_reference = 1;
@@ -65,6 +71,7 @@ service CatalogueService {
   rpc ListContent(ListContentRequest) returns (ListContentResponse);
   rpc ListQueries(ListQueriesRequest) returns (ListQueriesResponse);
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc ListUser(ListUserRequest) returns (ListUserResponse);
 
   rpc BuildContainer(BuildContainerRequest) returns (BuildContainerResponse);
   rpc BuildContent(BuildContentRequest) returns (BuildContentResponse);

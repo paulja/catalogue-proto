@@ -25,6 +25,7 @@ const (
 	CatalogueService_ListContent_FullMethodName     = "/CatalogueService/ListContent"
 	CatalogueService_ListQueries_FullMethodName     = "/CatalogueService/ListQueries"
 	CatalogueService_ListUsers_FullMethodName       = "/CatalogueService/ListUsers"
+	CatalogueService_ListUser_FullMethodName        = "/CatalogueService/ListUser"
 	CatalogueService_BuildContainer_FullMethodName  = "/CatalogueService/BuildContainer"
 	CatalogueService_BuildContent_FullMethodName    = "/CatalogueService/BuildContent"
 )
@@ -41,6 +42,7 @@ type CatalogueServiceClient interface {
 	ListContent(ctx context.Context, in *ListContentRequest, opts ...grpc.CallOption) (*ListContentResponse, error)
 	ListQueries(ctx context.Context, in *ListQueriesRequest, opts ...grpc.CallOption) (*ListQueriesResponse, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	ListUser(ctx context.Context, in *ListUserRequest, opts ...grpc.CallOption) (*ListUserResponse, error)
 	BuildContainer(ctx context.Context, in *BuildContainerRequest, opts ...grpc.CallOption) (*BuildContainerResponse, error)
 	BuildContent(ctx context.Context, in *BuildContentRequest, opts ...grpc.CallOption) (*BuildContentResponse, error)
 }
@@ -113,6 +115,16 @@ func (c *catalogueServiceClient) ListUsers(ctx context.Context, in *ListUsersReq
 	return out, nil
 }
 
+func (c *catalogueServiceClient) ListUser(ctx context.Context, in *ListUserRequest, opts ...grpc.CallOption) (*ListUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListUserResponse)
+	err := c.cc.Invoke(ctx, CatalogueService_ListUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *catalogueServiceClient) BuildContainer(ctx context.Context, in *BuildContainerRequest, opts ...grpc.CallOption) (*BuildContainerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(BuildContainerResponse)
@@ -145,6 +157,7 @@ type CatalogueServiceServer interface {
 	ListContent(context.Context, *ListContentRequest) (*ListContentResponse, error)
 	ListQueries(context.Context, *ListQueriesRequest) (*ListQueriesResponse, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	ListUser(context.Context, *ListUserRequest) (*ListUserResponse, error)
 	BuildContainer(context.Context, *BuildContainerRequest) (*BuildContainerResponse, error)
 	BuildContent(context.Context, *BuildContentRequest) (*BuildContentResponse, error)
 	mustEmbedUnimplementedCatalogueServiceServer()
@@ -171,6 +184,9 @@ func (UnimplementedCatalogueServiceServer) ListQueries(context.Context, *ListQue
 }
 func (UnimplementedCatalogueServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedCatalogueServiceServer) ListUser(context.Context, *ListUserRequest) (*ListUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUser not implemented")
 }
 func (UnimplementedCatalogueServiceServer) BuildContainer(context.Context, *BuildContainerRequest) (*BuildContainerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BuildContainer not implemented")
@@ -299,6 +315,24 @@ func _CatalogueService_ListUsers_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CatalogueService_ListUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogueServiceServer).ListUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CatalogueService_ListUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogueServiceServer).ListUser(ctx, req.(*ListUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CatalogueService_BuildContainer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BuildContainerRequest)
 	if err := dec(in); err != nil {
@@ -365,6 +399,10 @@ var CatalogueService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUsers",
 			Handler:    _CatalogueService_ListUsers_Handler,
+		},
+		{
+			MethodName: "ListUser",
+			Handler:    _CatalogueService_ListUser_Handler,
 		},
 		{
 			MethodName: "BuildContainer",
