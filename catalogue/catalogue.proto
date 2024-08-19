@@ -29,7 +29,7 @@ message ListContentRequest {
   string container_reference = 1;
 }
 message ListContentResponse {
-  repeated string content_reference = 1;
+  repeated string contents = 1;
 }
 message ListQueriesRequest {
   string container_reference = 1;
