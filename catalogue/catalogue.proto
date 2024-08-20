@@ -62,6 +62,12 @@ message BuildContentRequest {
 }
 message BuildContentResponse {}
 
+message ReconcileRequest {
+  string container_reference = 1;
+  optional string content_reference = 2;
+}
+message ReconcileResponse {}
+
 // service definition
 service CatalogueService {
   rpc CreateContainer(CreateContainerRequest) returns (CreateContainerResponse);
@@ -75,4 +81,6 @@ service CatalogueService {
 
   rpc BuildContainer(BuildContainerRequest) returns (BuildContainerResponse);
   rpc BuildContent(BuildContentRequest) returns (BuildContentResponse);
+
+  rpc Reconcile(ReconcileRequest) returns (ReconcileResponse);
 }

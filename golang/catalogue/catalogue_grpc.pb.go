@@ -28,6 +28,7 @@ const (
 	CatalogueService_ListUser_FullMethodName        = "/CatalogueService/ListUser"
 	CatalogueService_BuildContainer_FullMethodName  = "/CatalogueService/BuildContainer"
 	CatalogueService_BuildContent_FullMethodName    = "/CatalogueService/BuildContent"
+	CatalogueService_Reconcile_FullMethodName       = "/CatalogueService/Reconcile"
 )
 
 // CatalogueServiceClient is the client API for CatalogueService service.
@@ -45,6 +46,7 @@ type CatalogueServiceClient interface {
 	ListUser(ctx context.Context, in *ListUserRequest, opts ...grpc.CallOption) (*ListUserResponse, error)
 	BuildContainer(ctx context.Context, in *BuildContainerRequest, opts ...grpc.CallOption) (*BuildContainerResponse, error)
 	BuildContent(ctx context.Context, in *BuildContentRequest, opts ...grpc.CallOption) (*BuildContentResponse, error)
+	Reconcile(ctx context.Context, in *ReconcileRequest, opts ...grpc.CallOption) (*ReconcileResponse, error)
 }
 
 type catalogueServiceClient struct {
@@ -145,6 +147,16 @@ func (c *catalogueServiceClient) BuildContent(ctx context.Context, in *BuildCont
 	return out, nil
 }
 
+func (c *catalogueServiceClient) Reconcile(ctx context.Context, in *ReconcileRequest, opts ...grpc.CallOption) (*ReconcileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ReconcileResponse)
+	err := c.cc.Invoke(ctx, CatalogueService_Reconcile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CatalogueServiceServer is the server API for CatalogueService service.
 // All implementations must embed UnimplementedCatalogueServiceServer
 // for forward compatibility
@@ -160,6 +172,7 @@ type CatalogueServiceServer interface {
 	ListUser(context.Context, *ListUserRequest) (*ListUserResponse, error)
 	BuildContainer(context.Context, *BuildContainerRequest) (*BuildContainerResponse, error)
 	BuildContent(context.Context, *BuildContentRequest) (*BuildContentResponse, error)
+	Reconcile(context.Context, *ReconcileRequest) (*ReconcileResponse, error)
 	mustEmbedUnimplementedCatalogueServiceServer()
 }
 
@@ -193,6 +206,9 @@ func (UnimplementedCatalogueServiceServer) BuildContainer(context.Context, *Buil
 }
 func (UnimplementedCatalogueServiceServer) BuildContent(context.Context, *BuildContentRequest) (*BuildContentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BuildContent not implemented")
+}
+func (UnimplementedCatalogueServiceServer) Reconcile(context.Context, *ReconcileRequest) (*ReconcileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Reconcile not implemented")
 }
 func (UnimplementedCatalogueServiceServer) mustEmbedUnimplementedCatalogueServiceServer() {}
 
@@ -369,6 +385,24 @@ func _CatalogueService_BuildContent_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CatalogueService_Reconcile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReconcileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogueServiceServer).Reconcile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CatalogueService_Reconcile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogueServiceServer).Reconcile(ctx, req.(*ReconcileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CatalogueService_ServiceDesc is the grpc.ServiceDesc for CatalogueService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -411,6 +445,10 @@ var CatalogueService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BuildContent",
 			Handler:    _CatalogueService_BuildContent_Handler,
+		},
+		{
+			MethodName: "Reconcile",
+			Handler:    _CatalogueService_Reconcile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
